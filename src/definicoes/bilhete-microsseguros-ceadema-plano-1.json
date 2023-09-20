@@ -1,0 +1,39 @@
+{
+  "titulo": "BILHETE DE MICROSSEGURO DE PESSOAS",
+  "grupo_ramo": "1601",
+  "modalidade": "Microsseguro",
+  "coberturas": {
+    "templateNome": "linha-cobertura.template.html",
+    "valores": [
+      {
+        "nome": "Morte",
+        "capitalSegurado": "R$ 10.000,00",
+        "premioTotal": "R$ 19,98"
+      },
+      {
+        "nome": "Invalidez Permanente Total por Acidente - IPTA",
+        "capitalSegurado": "R$ 10.000,00",
+        "premioTotal": "R$ 0,70"
+      },
+      {
+        "nome": "Reembolso de Despesas com Funeral",
+        "capitalSegurado": "R$ 5.000,00",
+        "premioTotal": "R$ 6,41"
+      }
+    ]
+  },
+  "servicos": {
+    "templateNome": "linha-servico.template.html",
+    "valores": [
+      {
+        "nome": "(**) Programa - MAPFRE CUIDANDO DE VOCÊ – Desconto em Consulta, Exames e Medicamentos e Telemedicina (sem pagamento de Consulta)",
+        "limite": "Consulte regulamento",
+        "custoUnitario": "Gratuito"
+      }
+    ]
+  },
+  "premioTotalFinal": "R$ 27,19",
+  "premioTotalLiquido": "R$ 27,09",
+  "iof": "R$ 0,10",
+  "remuneracaoRepresentante": "R$ 10,84"
+}

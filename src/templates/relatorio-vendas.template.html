@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Relatório de vendas</title>
+    <style>
+      /* #region reset */
+      :root {
+        font-size: 10px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      /* #endregion reset */
+
+      /* #region main */
+      .line {
+        position: relative;
+        overflow-y: hidden;
+        font-size: 0;
+      }
+
+      .line__cell {
+        font-size: 1.2rem;
+        display: inline-block;
+        position: relative;
+        vertical-align: middle;
+        line-height: 2rem;
+        padding: 0.2rem;
+      }
+
+      .line__cell--no-border {
+        border: none;
+      }
+
+      .line__cell--10 {
+        width: 10%;
+      }
+
+      .line__cell--15 {
+        width: 15%;
+      }
+
+      .line__cell--20 {
+        width: 20%;
+      }
+
+      .line__cell--25 {
+        width: 25%;
+      }
+
+      .line__cell--30 {
+        width: 30%;
+      }
+
+      .line__cell--40 {
+        width: 40%;
+      }
+
+      .line__cell--60 {
+        width: 60%;
+      }
+
+      .line__cell--70 {
+        width: 70%;
+      }
+
+      .line__cell--100 {
+        width: 100%;
+      }
+      /* #endregion main */
+
+      /* #region background */
+      .bg-01 {
+        background: [template_cor_primaria01];
+        color: #fff;
+      }
+
+      .bg-02 {
+        background: [template_cor_primaria02];
+        color: #fff;
+      }
+
+      .bg-03 {
+        background: [template_cor_primaria03];
+        color: #fff;
+      }
+
+      .border {
+        border: 0.1rem solid #a5a5a5;
+      }
+
+      .border-bottom {
+        border-bottom: 0.1rem solid #a5a5a5;
+      }
+
+      .border-right {
+        position: relative;
+      }
+
+      .border-right::before {
+        position: absolute;
+        bottom: -1000px;
+        top: -1000px;
+        display: block;
+        right: 1px;
+        width: 1px;
+        content: "";
+        background: #a5a5a5;
+      }
+      /* #endregion background */
+
+      /* #region font */
+      .text-align-center {
+        text-align: center;
+      }
+
+      .ft-400 {
+        font-weight: 400;
+      }
+
+      .ft-size-12 {
+        font-size: 1.2rem;
+      }
+
+      .ft-size-14 {
+        font-size: 1.4rem;
+      }
+
+      .ft-size-18 {
+        font-size: 1.8rem;
+      }
+      /* #endregion font */
+
+      /* #region layout */
+      .mt-18 {
+        margin-top: 1.8rem;
+      }
+
+      .mb-18 {
+        margin-bottom: 1.8rem;
+      }
+      /* #endregion layout */
+    </style>
+  </head>
+  <body>
+    <!-- #region header -->
+    <div class="line bg-01 text-align-center">
+      <div class="line__cell line__cell-100 line__cell--no-border ft-size-18">
+        RELATÓRIO DE VENDAS
+      </div>
+    </div>
+    <!-- #endregion header -->
+
+    <!-- #region canal de distribuição -->
+    [loop_canal_distribuicao]
+    <!-- #endregion canal de distribuição -->
+
+    <!-- #region resumo relatório -->
+    <div style="margin-top: 1.8rem">
+      <div class="line">
+        <div class="line__cell line__cell--60 bg-02">Resumo do Relatório:</div>
+      </div>
+
+      <div class="line">
+        <div class="line__cell line__cell--30 border">
+          Quantidade Total de Contratos:
+        </div>
+        <div class="line__cell line__cell--30 border">
+          [contratos_quantidade_total]
+        </div>
+      </div>
+
+      <div class="line">
+        <div class="line__cell line__cell--30 border">
+          Valor Total dos Contratos R$:
+        </div>
+        <div class="line__cell line__cell--30 border">
+          [contratos_valor_total]
+        </div>
+      </div>
+    </div>
+    <!-- #endregion resumo relatório -->
+  </body>
+</html>
