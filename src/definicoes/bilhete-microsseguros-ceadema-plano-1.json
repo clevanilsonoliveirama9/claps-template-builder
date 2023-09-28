@@ -1,5 +1,6 @@
 {
   "titulo": "BILHETE DE MICROSSEGURO DE PESSOAS",
+  "templateNome": "bilhete-base.template.html",
   "grupo_ramo": "1601",
   "modalidade": "Microsseguro",
   "coberturas": {

@@ -1,6 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-const { lerArquivo } = require("./ler-arquivo.util");
 const { converterCamelCaseParaSnakeCase } = require("./converter-case.util");
 
 function gerarMarcador(chave) {
@@ -9,6 +8,10 @@ function gerarMarcador(chave) {
 
 class ConstrutorTemplate {
   template = "";
+
+  constructor(manipulador) {
+    this.manipulador = manipulador;
+  }
 
   /**
    * @param {string} caminho
@@ -31,7 +34,7 @@ class ConstrutorTemplate {
 
   definirValoresObjeto(chave, objeto) {
     const { templateNome } = objeto;
-    const template = lerArquivo("src", "templates", templateNome);
+    const template = this.manipulador.lerSync("src", "templates", templateNome);
     let linhas = "";
 
     objeto.valores.forEach((coluna) => {
@@ -49,11 +52,13 @@ class ConstrutorTemplate {
   }
 
   /**
+   * @param {string} caminho
    * @param {string} nome
    */
-  construir(nome) {
-    fs.writeFileSync(
-      path.resolve(__dirname, "..", "dist", nome),
+  construir(caminho, nome) {
+    this.manipulador.criarSync(
+      path.resolve(__dirname, "..", "dist", caminho),
+      nome,
       this.template
     );
   }

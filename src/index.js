@@ -2,21 +2,29 @@ const fs = require("fs");
 const path = require("path");
 const {
   ConstrutorTemplate,
+  ArquivoManipulador,
   converterCamelCaseParaSnakeCase,
-  lerArquivo,
 } = require("./utils/index");
 
-const templatePath = path.resolve(__dirname, "templates");
-const definicoesPath = path.resolve(__dirname, "definicoes");
+console.clear();
 
-fs.readdirSync(path.resolve(__dirname, "definicoes")).forEach((arquivoNome) => {
-  const definicaoArquivo = lerArquivo(definicoesPath, arquivoNome);
-  const json = JSON.parse(definicaoArquivo);
-  const template = lerArquivo(
-    templatePath,
-    json.templateNome || "bilhete-base.template.html"
-  );
-  const construtor = new ConstrutorTemplate();
+const manipulador = new ArquivoManipulador();
+
+function lerAquivos(caminho) {
+  fs.readdirSync(caminho).forEach((nome) => {
+    const isArquivo = nome.includes(".");
+    if (isArquivo) return tratarArquivo(caminho, nome);
+    return lerAquivos(`${caminho}/${nome}`);
+  });
+}
+
+function tratarArquivo(caminho, nome) {
+  const arquivo = manipulador.lerSync(caminho, nome);
+  const json = JSON.parse(arquivo);
+  const { templateNome } = json;
+  const template = manipulador.lerSync(__dirname, "templates", templateNome);
+  const construtor = new ConstrutorTemplate(manipulador);
+
   construtor.definirTemplate(template);
 
   Object.keys(json).forEach((chave) => {
@@ -27,5 +35,8 @@ fs.readdirSync(path.resolve(__dirname, "definicoes")).forEach((arquivoNome) => {
     construtor.definirValor(converterCamelCaseParaSnakeCase(chave), valor);
   });
 
-  construtor.construir(arquivoNome.replace(".json", ".html"));
-});
+  const prefixoDir = json.parceiroDir || "";
+  construtor.construir(prefixoDir, nome.replace("json", "html"));
+}
+
+lerAquivos(path.join(__dirname, "definicoes"));
