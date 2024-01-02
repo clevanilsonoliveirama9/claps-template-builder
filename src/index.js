@@ -1,42 +1,68 @@
-const fs = require("fs");
+// const fs = require("fs");
+// const path = require("path");
+// const {
+//   ConstrutorTemplate,
+//   ArquivoManipulador,
+//   converterCamelCaseParaSnakeCase,
+const express = require("express");
 const path = require("path");
+const { PORT } = require("./constants/index.js");
 const {
-  ConstrutorTemplate,
-  ArquivoManipulador,
-  converterCamelCaseParaSnakeCase,
-} = require("./utils/index");
+  templateController,
+  parceiroController,
+} = require("./controlers/index.js");
 
-console.clear();
+const app = express();
 
-const manipulador = new ArquivoManipulador();
+// app.get("/", templateController.getIndexHtml);
 
-function lerAquivos(caminho) {
-  fs.readdirSync(caminho).forEach((nome) => {
-    const isArquivo = nome.includes(".");
-    if (isArquivo) return tratarArquivo(caminho, nome);
-    return lerAquivos(`${caminho}/${nome}`);
-  });
-}
+app.use(express.static(path.join(__dirname, "views")));
 
-function tratarArquivo(caminho, nome) {
-  const arquivo = manipulador.lerSync(caminho, nome);
-  const json = JSON.parse(arquivo);
-  const { templateNome } = json;
-  const template = manipulador.lerSync(__dirname, "templates", templateNome);
-  const construtor = new ConstrutorTemplate(manipulador);
+app.get("/api/templates", templateController.getTemplates);
 
-  construtor.definirTemplate(template);
+app.get("/api/parceiros", parceiroController.getParceiros);
 
-  Object.keys(json).forEach((chave) => {
-    const valor = json[chave];
-    if (typeof valor === "object") {
-      return construtor.definirValoresObjeto(chave, valor);
-    }
-    construtor.definirValor(converterCamelCaseParaSnakeCase(chave), valor);
-  });
+app.get(
+  "/api/parceiro/:parceiroNome/template/:nome",
+  parceiroController.getTemplate
+);
 
-  const prefixoDir = json.parceiroDir || "";
-  construtor.construir(prefixoDir, nome.replace("json", "html"));
-}
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
+// } = require("./utils/index");
 
-lerAquivos(path.join(__dirname, "definicoes"));
+// console.clear();
+
+// const manipulador = new ArquivoManipulador();
+
+// function lerAquivos(caminho) {
+//   fs.readdirSync(caminho).forEach((nome) => {
+//     const isArquivo = nome.includes(".");
+//     if (isArquivo) return tratarArquivo(caminho, nome);
+//     return lerAquivos(`${caminho}/${nome}`);
+//   });
+// }
+
+// function tratarArquivo(caminho, nome) {
+//   const arquivo = manipulador.lerSync(caminho, nome);
+//   const json = JSON.parse(arquivo);
+//   const { templateNome } = json;
+//   const template = manipulador.lerSync(__dirname, "templates", templateNome);
+//   const construtor = new ConstrutorTemplate(manipulador);
+
+//   construtor.definirTemplate(template);
+
+//   Object.keys(json).forEach((chave) => {
+//     const valor = json[chave];
+//     if (typeof valor === "object") {
+//       return construtor.definirValoresObjeto(chave, valor);
+//     }
+//     construtor.definirValor(converterCamelCaseParaSnakeCase(chave), valor);
+//   });
+
+//   const prefixoDir = json.parceiroDir || "";
+//   construtor.construir(prefixoDir, nome.replace("json", "html"));
+// }
+
+// lerAquivos(path.join(__dirname, "definicoes"));

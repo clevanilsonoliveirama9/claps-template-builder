@@ -2,10 +2,6 @@ const fs = require("fs");
 const path = require("path");
 
 class ArquivoManipulador {
-  /**
-   * @param  {...string} args
-   * @returns
-   */
   lerSync = (...args) => {
     return fs.readFileSync(path.resolve(...args), "utf-8");
   };
